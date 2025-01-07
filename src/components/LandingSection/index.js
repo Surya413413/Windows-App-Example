@@ -1,5 +1,7 @@
 import './index.css'
 
+import reactContext from '../../context/reactContext'
+
 const landingSectionContent = {
   EN: {
     heading: 'Windows 11',
@@ -18,7 +20,7 @@ const landingSectionContent = {
   },
 }
 
-const LandingSection = props => {
+const LandingSection = () => {
   const getLandingSectionData = activeLanguage => {
     switch (activeLanguage) {
       case 'EN':
@@ -31,22 +33,29 @@ const LandingSection = props => {
         return null
     }
   }
-  const {activeLanguage} = props
-  const {heading, description} = getLandingSectionData(activeLanguage)
+
   return (
-    <div className="bg-container">
-      <div className="responsive-container">
-        <div className="description-container">
-          <h1 className="heading">{heading}</h1>
-          <p className="description">{description}</p>
-        </div>
-        <img
-          className="logo-white"
-          src="https://assets.ccbp.in/frontend/react-js/windows-logo-white-img.png"
-          alt="windows logo"
-        />
-      </div>
-    </div>
+    <reactContext.Consumer>
+      {value => {
+        const {activeLanguage} = value
+        const {heading, description} = getLandingSectionData(activeLanguage)
+        return (
+          <div className="bg-container">
+            <div className="responsive-container">
+              <div className="description-container">
+                <h1 className="heading">{heading}</h1>
+                <p className="description">{description}</p>
+              </div>
+              <img
+                className="logo-white"
+                src="https://assets.ccbp.in/frontend/react-js/windows-logo-white-img.png"
+                alt="windows logo"
+              />
+            </div>
+          </div>
+        )
+      }}
+    </reactContext.Consumer>
   )
 }
 

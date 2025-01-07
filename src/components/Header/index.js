@@ -1,3 +1,4 @@
+import reactContext from '../../context/reactContext'
 import './index.css'
 
 const languageOptions = [
@@ -6,33 +7,37 @@ const languageOptions = [
   {id: 3, value: 'TE', language: 'తెలుగు'},
 ]
 
-const Header = props => {
-  const {activeLanguage, changeLanguage} = props
+const Header = () => (
+  <reactContext.Consumer>
+    {value => {
+      const {activeLanguage, changeLanguage} = value
 
-  const onChangeLanguage = event => {
-    changeLanguage(event.target.value)
-  }
+      const onChangeLanguage = event => {
+        changeLanguage(event.target.value)
+      }
 
-  return (
-    <nav className="nav-header">
-      <img
-        className="website-logo"
-        src="https://assets.ccbp.in/frontend/react-js/windows-logo-img.png"
-        alt="website logo"
-      />
-      <select
-        className="language-dropdown"
-        value={activeLanguage}
-        onChange={onChangeLanguage}
-      >
-        {languageOptions.map(eachOption => (
-          <option key={eachOption.id} value={eachOption.value}>
-            {eachOption.language}
-          </option>
-        ))}
-      </select>
-    </nav>
-  )
-}
+      return (
+        <nav className="nav-header">
+          <img
+            className="website-logo"
+            src="https://assets.ccbp.in/frontend/react-js/windows-logo-img.png"
+            alt="website logo"
+          />
+          <select
+            className="language-dropdown"
+            value={activeLanguage}
+            onChange={onChangeLanguage}
+          >
+            {languageOptions.map(eachOption => (
+              <option key={eachOption.id} value={eachOption.value}>
+                {eachOption.language}
+              </option>
+            ))}
+          </select>
+        </nav>
+      )
+    }}
+  </reactContext.Consumer>
+)
 
 export default Header

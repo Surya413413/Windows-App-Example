@@ -1,5 +1,7 @@
 import './index.css'
 
+import reactContext from '../../context/reactContext'
+
 const newWaysToConnectContent = {
   EN: {
     heading: 'New ways to connect',
@@ -18,7 +20,7 @@ const newWaysToConnectContent = {
   },
 }
 
-const NewWaysToConnect = props => {
+const NewWaysToConnect = () => {
   const getNewWaysToConnectData = activeLanguage => {
     switch (activeLanguage) {
       case 'EN':
@@ -31,14 +33,20 @@ const NewWaysToConnect = props => {
         return null
     }
   }
-  const {activeLanguage} = props
-  const {heading, description} = getNewWaysToConnectData(activeLanguage)
 
   return (
-    <div className="new-ways-to-connect-container">
-      <h1 className="new-ways-to-content-heading">{heading}</h1>
-      <p className="new-ways-to-content-description">{description}</p>
-    </div>
+    <reactContext.Consumer>
+      {value => {
+        const {activeLanguage} = value
+        const {heading, description} = getNewWaysToConnectData(activeLanguage)
+        return (
+          <div className="new-ways-to-connect-container">
+            <h1 className="new-ways-to-content-heading">{heading}</h1>
+            <p className="new-ways-to-content-description">{description}</p>
+          </div>
+        )
+      }}
+    </reactContext.Consumer>
   )
 }
 
